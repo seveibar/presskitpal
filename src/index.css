@@ -1,0 +1,19 @@
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.sidebar-button {
+  transition: background-color 200ms;
+  font-size: 18px;
+  text-align: right;
+  padding: 12px;
+  width: 150;
+  padding-right: 20px;
+  cursor: pointer;
+}
+.sidebar-button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}

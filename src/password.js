@@ -7,7 +7,7 @@ export const hashPassword = (password: string) =>
   new Promise((resolve, reject) => {
     pw.hash(password, (err, hash) => {
       if (err) return reject(err)
-      resolve(password)
+      resolve(hash)
     })
   })
 

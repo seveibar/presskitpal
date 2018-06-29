@@ -13,7 +13,9 @@ import knex from 'knex'
 import seed from './seed/index'
 import fs from 'fs'
 import tmp from 'tmp-promise'
-import request from 'request-promise'
+import { verifyPassword } from './password'
+import basicAuth from 'express-basic-auth'
+import css from './index.css'
 
 const importAll = r =>
   r.keys().reduce((acc, k) => {
@@ -29,6 +31,7 @@ const routeMap = importAll(require.context('./pages', true, /\.page\.js$/))
 class HTTPAPI {
   db: any
   app: any
+  authRouter: any
 
   init = async () => {
     console.log('initing http api...')
@@ -92,17 +95,37 @@ class HTTPAPI {
     this.app.use(bodyParser.json({ limit: '90mb' }))
     this.app.use(cookieParser())
     this.app.use(morgan('tiny'))
-    // pull the root data from the db
-    this.app.use(async (req, res, next) => {
-      req.site = next()
-    })
+
+    const router = new express.Router()
+    router.use(
+      basicAuth({
+        challenge: true,
+        authorizeAsync: true,
+        authorizer: async (admin_user_id, password, cb) => {
+          const user = await this.db('admin_user')
+            .where({ admin_user_id })
+            .first()
+          if (await verifyPassword(user.password_hash, password)) {
+            cb(null, true)
+          } else {
+            cb(null, false)
+          }
+        }
+      })
+    )
+    this.app.use('/admin', router)
+    this.authRouter = router
   }
 
   _configureRoutes = async () => {
     console.log('configuring routes...')
-    for (const [route, componentFunc] of Object.entries(routeMap)) {
-      console.log('configuring route: ', route)
-      this.app.get(`/${route}`, async (req, res) => {
+    for (let [route, componentFunc] of Object.entries(routeMap)) {
+      let router = this.app
+      if (route.startsWith('/admin')) {
+        router = this.authRouter
+        route = route.replace(/^\/admin\//, '')
+      }
+      router.get(`/${route}`, async (req, res) => {
         const site = JSON.parse(
           (await this.db('info')
             .select('value')
@@ -120,6 +143,7 @@ class HTTPAPI {
           res.send(
             htmlTemplate({
               site,
+              css,
               body: ReactDOM.renderToString(renderedComponent)
             })
           )
@@ -144,14 +168,22 @@ class HTTPAPI {
     })
 
     this.app.get('*', async (req, res) => {
+      const site = JSON.parse(
+        (await this.db('info')
+          .select('value')
+          .where({ path: 'root' })
+          .first()).value
+      )
       res.send(
         htmlTemplate({
+          site,
+          css,
           body: ReactDOM.renderToString(
             await routeMap['/404']({
               req,
               res,
               db: this.db,
-              pages: Object.keys(routeMap)
+              pages: Object.keys(routeMap).filter(k => !k.includes('admin'))
             })
           )
         })

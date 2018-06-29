@@ -1,3 +1,10 @@
-import * as React from 'react'
+// @flow
 
-export default async ({ db, site }) => <div>{site.name}</div>
+import * as React from 'react'
+import Page from '../components/Page'
+
+export default async ({ db, site }) => (
+  <Page site={site}>
+    <pre>{JSON.stringify(site, null, '  ')}</pre>
+  </Page>
+)

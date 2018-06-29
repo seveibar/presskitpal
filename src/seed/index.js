@@ -6,7 +6,8 @@ import request from 'request-promise'
 
 const rootData = yaml.safeLoad(`
 name: Example Site
-cornerLogo: logo01.jpg
+cornerLogo: /images/logo01.jpg
+primaryColor: "#2196F3"
 about:
   text: |
     # You'll love this website, here's why
@@ -14,7 +15,7 @@ about:
 contact:
   text: |
     For press inquiries, please contact:
-  personImage: contact-image.jpg
+  personImage: /images/contact-image.jpg
   personName: Jane Doe
   personEmail: press@example.com
   personPhone: 123-456-7891
@@ -49,11 +50,11 @@ links:
 pressCoverage:
   articles:
     - datePublished: 05/30/2017
-      publicationImage: publication1.jpg
+      publicationImage: /images/publication1.jpg
       quotation: |
         An incredible new resource for doing this and that.
     - datePublished: 02/30/2016
-      publicationImage: publication2.jpg
+      publicationImage: /images/publication2.jpg
       quotation: |
         Truly breathtaking this, and wonderful that.
 team:
@@ -68,23 +69,23 @@ team:
   - name: Jessica
     title: Web Developer
 images:
-  - url: img01.jpg
+  - url: /images/img01.jpg
     text: In the office with the team
-  - url: img02.jpg
+  - url: /images/img02.jpg
     text: Sales team presenting at a conference.
 videos:
   - url: https://www.youtube.com/watch?v=yGWkUFH-T0M
 logos:
-  - url: logo01.jpg
+  - url: /images/logo01.jpg
     text: Our mascot!
-  - url: logo02.jpg
+  - url: /images/logo02.jpg
     text: Another version of our logo!
 `)
 
 export default async db => {
   await db('admin_user').insert({
     admin_user_id: 'admin',
-    password_hash: hashPassword('admin')
+    password_hash: await hashPassword('admin')
   })
 
   await db('info').insert({
