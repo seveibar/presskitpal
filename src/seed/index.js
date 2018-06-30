@@ -59,22 +59,25 @@ pressCoverage:
       publicationImage: /images/publication2.jpg
       quotation: |
         Truly breathtaking this, and wonderful that.
-team:
-  - name: John
-    title: CEO
-    imageURL: /images/person01.jpg
-  - name: Joseph
-    title: COO
-    imageURL: /images/person02.jpg
-  - name: Candice
-    title: CTO
-    imageURL: /images/person03.jpg
-  - name: Zaran
-    title: Senior Web Developer
-    imageURL: /images/person04.jpg
-  - name: Jessica
-    title: Web Developer
-    imageURL: /images/person05.jpg
+people:
+  text: |
+    ## The best team in the world, to change the world
+  team:
+    - name: John
+      title: CEO
+      imageURL: /images/person01.jpg
+    - name: Joseph
+      title: COO
+      imageURL: /images/person02.jpg
+    - name: Candice
+      title: CTO
+      imageURL: /images/person03.jpg
+    - name: Zaran
+      title: Senior Web Developer
+      imageURL: /images/person04.jpg
+    - name: Jessica
+      title: Web Developer
+      imageURL: /images/person05.jpg
 images:
   - url: /images/img01.jpg
     text: In the office with the team

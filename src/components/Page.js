@@ -10,8 +10,10 @@ export default ({ site, children, route }: any) => (
       style={{
         flexShrink: 1,
         maxWidth: 1400,
+        width: '100%',
         display: 'flex',
         flexGrow: 1,
+        flexShrink: 1,
         flexDirection: 'row'
       }}
     >
@@ -19,7 +21,8 @@ export default ({ site, children, route }: any) => (
         style={{
           display: 'flex',
           flexDirection: 'column',
-          width: 300
+          width: 300,
+          borderRight: `2px solid ${site.primaryColor}`
         }}
       >
         <Sidebar site={site} route={route} />
@@ -29,10 +32,11 @@ export default ({ site, children, route }: any) => (
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
+          flexShrink: 1,
           backgroundColor: '#eee'
         }}
       >
-        {children}
+        <div className="content">{children}</div>
       </div>
     </div>
     <div style={{ flexGrow: 1, backgroundColor: '#eee' }} />

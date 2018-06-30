@@ -23,8 +23,7 @@ export default ({ site, route }: any) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-end',
-        minHeight: '100vh',
-        borderRight: `2px solid ${site.primaryColor}`
+        minHeight: '100vh'
       }}
     >
       {site.cornerLogo && (
