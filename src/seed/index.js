@@ -3,6 +3,8 @@
 import { hashPassword } from '../password'
 import yaml from 'js-yaml'
 import request from 'request-promise'
+import path from 'path'
+import fs from 'fs'
 
 const rootData = yaml.safeLoad(`
 name: Example Site
@@ -60,14 +62,19 @@ pressCoverage:
 team:
   - name: John
     title: CEO
+    imageURL: /images/person01.jpg
   - name: Joseph
     title: COO
+    imageURL: /images/person02.jpg
   - name: Candice
     title: CTO
+    imageURL: /images/person03.jpg
   - name: Zaran
     title: Senior Web Developer
+    imageURL: /images/person04.jpg
   - name: Jessica
     title: Web Developer
+    imageURL: /images/person05.jpg
 images:
   - url: /images/img01.jpg
     text: In the office with the team
@@ -93,23 +100,43 @@ export default async db => {
     value: JSON.stringify(rootData)
   })
 
+  try {
+    fs.mkdirSync('.cache')
+  } catch (e) {}
+
+  const images = [
+    'logo01.jpg',
+    'logo02.jpg',
+    'img01.jpg',
+    'img02.jpg',
+    'publication1.jpg',
+    'publication2.jpg',
+    'contact-image.jpg',
+    'person01.jpg',
+    'person02.jpg',
+    'person03.jpg',
+    'person04.jpg',
+    'person05.jpg'
+  ]
+
+  for (const image of images) {
+    if (!fs.existsSync(path.join('.cache', image))) {
+      fs.writeFileSync(
+        path.join('.cache', image),
+        await request({
+          url: `https://placem.at/things.jpg?w=400&h=300&random=${image}`,
+          encoding: null
+        })
+      )
+    }
+  }
+
   await db.batchInsert(
     'image',
     await Promise.all(
-      [
-        'logo01.jpg',
-        'logo02.jpg',
-        'img01.jpg',
-        'img02.jpg',
-        'publication1.jpg',
-        'publication2.jpg',
-        'contact-image.jpg'
-      ].map(async (path, i) => ({
-        path,
-        value: await request({
-          url: `https://placem.at/things.jpg?w=400&h=300&random=${i}`,
-          encoding: null
-        }),
+      images.map(async (imageName, i) => ({
+        path: imageName,
+        value: fs.readFileSync(path.join('.cache', imageName)),
         extension: 'jpg'
       }))
     )
