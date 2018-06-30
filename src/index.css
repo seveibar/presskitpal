@@ -7,6 +7,8 @@ body {
 
 .sidebar-button {
   transition: background-color 200ms;
+  color: #000;
+  text-decoration: none;
   font-size: 18px;
   text-align: right;
   padding: 12px;

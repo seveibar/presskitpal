@@ -3,7 +3,7 @@
 import React from 'react'
 import Sidebar from './Sidebar'
 
-export default ({ site, children }: any) => (
+export default ({ site, children, route }: any) => (
   <div style={{ display: 'flex', justifyContent: 'center' }}>
     <div style={{ flexGrow: 1 }} />
     <div
@@ -22,7 +22,7 @@ export default ({ site, children }: any) => (
           width: 300
         }}
       >
-        <Sidebar site={site} />
+        <Sidebar site={site} route={route} />
       </div>
       <div
         style={{

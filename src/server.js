@@ -120,12 +120,13 @@ class HTTPAPI {
   _configureRoutes = async () => {
     console.log('configuring routes...')
     for (let [route, componentFunc] of Object.entries(routeMap)) {
+      console.log('configuring:', route)
       let router = this.app
       if (route.startsWith('/admin')) {
         router = this.authRouter
         route = route.replace(/^\/admin\//, '')
       }
-      router.get(`/${route}`, async (req, res) => {
+      router.get(`${route}`, async (req, res) => {
         const site = JSON.parse(
           (await this.db('info')
             .select('value')
@@ -136,7 +137,8 @@ class HTTPAPI {
           req,
           res,
           db: this.db,
-          site
+          site,
+          route
         })
 
         if (isValidElement(renderedComponent)) {

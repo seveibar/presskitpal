@@ -2,16 +2,19 @@
 
 import React from 'react'
 
-export default ({ site }: any) => {
-  const Button = ({ children, active }) => (
-    <div
+export default ({ site, route }: any) => {
+  const Button = ({ children, url: buttonURL }) => (
+    <a
+      href={buttonURL}
       className="sidebar-button"
       style={
-        active ? { backgroundColor: site.primaryColor, color: '#fff' } : {}
+        route === buttonURL
+          ? { backgroundColor: site.primaryColor, color: '#fff' }
+          : {}
       }
     >
       {children}
-    </div>
+    </a>
   )
 
   return (
@@ -36,15 +39,15 @@ export default ({ site }: any) => {
           }}
         />
       )}
-      <Button active>About</Button>
-      <Button>Contact</Button>
-      <Button>Links</Button>
-      <Button>Press Coverage</Button>
-      <Button>People</Button>
-      <Button>Images</Button>
-      <Button>Videos</Button>
-      <Button>Logos</Button>
-      <Button>Testimonials</Button>
+      <Button url="/">About</Button>
+      <Button url="/contact">Contact</Button>
+      <Button url="/links">Links</Button>
+      <Button url="/coverage">Press Coverage</Button>
+      <Button url="/people">People</Button>
+      <Button url="/images">Images</Button>
+      <Button url="/videos">Videos</Button>
+      <Button url="/logos">Logos</Button>
+      <Button url="/testimonials">Testimonials</Button>
     </div>
   )
 }
