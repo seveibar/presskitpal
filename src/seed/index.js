@@ -17,7 +17,7 @@ about:
 contact:
   text: |
     For press inquiries, please contact:
-  personImage: /images/contact-image.jpg
+  personImage: /images/person02.jpg
   personName: Jane Doe
   personEmail: press@example.com
   personPhone: 123-456-7891
@@ -52,10 +52,12 @@ links:
 pressCoverage:
   articles:
     - datePublished: 05/30/2017
+      url: https://google.com
       publicationImage: /images/publication1.jpg
       quotation: |
         An incredible new resource for doing this and that.
     - datePublished: 02/30/2016
+      url: https://google.com
       publicationImage: /images/publication2.jpg
       quotation: |
         Truly breathtaking this, and wonderful that.
@@ -78,6 +80,18 @@ people:
     - name: Jessica
       title: Web Developer
       imageURL: /images/person05.jpg
+    - name: James
+      title: Web Developer
+      imageURL: /images/person06.jpg
+    - name: Chris
+      title: Writer
+      imageURL: /images/person07.jpg
+    - name: Alexa
+      title: Marketing Manager
+      imageURL: /images/person08.jpg
+    - name: Larry
+      title: Intern
+      imageURL: /images/person09.jpg
 images:
   - url: /images/img01.jpg
     text: In the office with the team
@@ -90,6 +104,18 @@ logos:
     text: Our mascot!
   - url: /images/logo02.jpg
     text: Another version of our logo!
+pressReleases:
+  - url: https://google.com
+    title: Example Company raises 10M Series A round to deliver better shopping experiences
+    date: 02/28/2016
+  - url: https://google.com
+    title: Announcing Example Company
+    date: 01/28/2016
+testimonials:
+  - text: This is such a great product. Like I really really love it. A lot.
+    author: Stacy Shaman
+  - text: Incredible, just incredible. I don't know how they did it but boy wow boy.
+    author: Rick Sanchez
 `)
 
 export default async db => {
@@ -114,12 +140,15 @@ export default async db => {
     'img02.jpg',
     'publication1.jpg',
     'publication2.jpg',
-    'contact-image.jpg',
     'person01.jpg',
     'person02.jpg',
     'person03.jpg',
     'person04.jpg',
-    'person05.jpg'
+    'person05.jpg',
+    'person06.jpg',
+    'person07.jpg',
+    'person08.jpg',
+    'person09.jpg'
   ]
 
   for (const image of images) {
@@ -127,7 +156,9 @@ export default async db => {
       fs.writeFileSync(
         path.join('.cache', image),
         await request({
-          url: `https://placem.at/things.jpg?w=400&h=300&random=${image}`,
+          url: `https://placem.at/${
+            image.includes('person') ? 'people' : 'things'
+          }.jpg?w=400&h=300&random=${image}`,
           encoding: null
         })
       )

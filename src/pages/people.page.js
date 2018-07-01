@@ -18,16 +18,25 @@ export default async ({ db, site, route }: PageParameters) => (
       }}
     >
       {site.people.team.map(t => (
-        <div style={{ margin: 10 }}>
-          <img
-            style={{
-              objectFit: 'cover',
-              width: 200,
-              height: 200,
-              borderRadius: 100
-            }}
-            src={t.imageURL}
-          />
+        <div style={{ margin: 10, width: 200 }}>
+          <a
+            href={t.imageURL}
+            download={
+              (site.name + ' ' + t.name).replace(/[^a-zA-Z]/g, '_') +
+              '.' +
+              t.imageURL.split('.').slice(-1)[0]
+            }
+          >
+            <img
+              style={{
+                objectFit: 'cover',
+                width: 200,
+                height: 200,
+                borderRadius: 100
+              }}
+              src={t.imageURL}
+            />
+          </a>
           <div style={{ textAlign: 'center' }}>
             <div
               style={{

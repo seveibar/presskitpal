@@ -47,6 +47,7 @@ export default ({ site, route }: any) => {
       <Button url="/videos">Videos</Button>
       <Button url="/logos">Logos</Button>
       <Button url="/testimonials">Testimonials</Button>
+      <Button url="/press-releases">Press Releases</Button>
     </div>
   )
 }

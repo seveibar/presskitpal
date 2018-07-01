@@ -25,6 +25,7 @@ export type SiteData = {
   about: { text: string },
   contact: {
     text: string,
+    personName: string,
     personImage: string,
     personEmail: string,
     personPhone: string
@@ -38,7 +39,8 @@ export type SiteData = {
     articles: Array<{
       datePublished: string,
       publicationImage: string,
-      quotation: string
+      quotation: string,
+      url: string
     }>
   },
   people: {
@@ -47,5 +49,11 @@ export type SiteData = {
   },
   images: Array<{ url: string, text: string }>,
   videos: Array<{ url: string }>,
-  logos: Array<{ url: string, text: string }>
+  logos: Array<{ url: string, text: string }>,
+  testimonials: Array<{ text: string, author: string }>,
+  pressReleases: Array<{
+    url: string,
+    title: string,
+    date: string
+  }>
 }

@@ -39,3 +39,7 @@ body {
   padding-left: 24px;
   padding-right: 24px;
 }
+
+.serif {
+  font-family: 'Roboto Slab', serif;
+}
