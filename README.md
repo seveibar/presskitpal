@@ -1,48 +1,17 @@
-# Express Server with React Templates
+# PressKitPal
 
-This is a **very simple** way to create a ui with api bindings built in.
-
-Features:
-* React as templating language
-* Express with sensible defaults and middleware for file uploads, json body parsing, form parsing etc.
-* Next.js (and PHP) inspired "place a file in a directory and it just works"
-* Renders simple static html (not SPAs)
+A simple press kit for your company.
 
 ## Usage
 
-`yarn install`
+Using docker, run the following command:
 
-`yarn start:watch`
-
-Visit `localhost:3003` in your browser.
-
-## Creating Routes
-
-Just place a JS file in the `pages` directory. It'll automatically be picked up
-on the server. The name of the file becomes the route, e.g. `src/pages/somepage.js`
-is visible at `http://localhost:3003/somepage`.
-
-Here's an example route file:
-```javascript
-// somepage.js
-import * as React from 'react'
-
-export default () => <div>'hello world'</div>
+```bash
+docker run -d -p 3000:3000 presskitpal
 ```
 
-Now let's do some *crazy* stuff with an api.
+## Developing
 
-```javascript
-// somepage.js
-import { incrementCounter, getCounterValue } from './some-db-functions'
-import * as React from 'react'
+This project is based on [express-react-templates](https://github.com/seveibar/express-react-templates).
 
-export default async ({ req }) => {
-  const { name } = req.query
-  await incrementCounter()
-  const numberOfVisitors = await getCounterValue()
-  return (
-    <div>{ numberOfVisitors } have visited this website! Thanks for coming {name}!</div>
-  )
-}
-```
+Each `*.page.js` file is automatically detected and should return a single react component.

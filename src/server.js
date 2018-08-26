@@ -82,8 +82,8 @@ class HTTPAPI {
     this._configureMiddleware()
     await this._configureRoutes()
     await new Promise(resolve => {
-      this.app.listen(3003, () => {
-        console.log('HTTP API Started on 3003')
+      this.app.listen(3000, () => {
+        console.log('HTTP API Started on 3000')
         resolve()
       })
     })
