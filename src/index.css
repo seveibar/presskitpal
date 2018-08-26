@@ -43,3 +43,11 @@ body {
 .serif {
   font-family: 'Roboto Slab', serif;
 }
+
+input {
+  border: 1px solid #ddd;
+  border-style: solid;
+  margin: 5px;
+  padding: 5px;
+  width: calc(100% - 10px);
+}

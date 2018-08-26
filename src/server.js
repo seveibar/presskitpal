@@ -105,6 +105,7 @@ class HTTPAPI {
           const user = await this.db('admin_user')
             .where({ admin_user_id })
             .first()
+          if (!user) return cb(null, false)
           if (await verifyPassword(user.password_hash, password)) {
             cb(null, true)
           } else {
@@ -126,7 +127,7 @@ class HTTPAPI {
         router = this.authRouter
         route = route.replace(/^\/admin\//, '')
       }
-      router.get(`${route}`, async (req, res) => {
+      const routeHandler = async (req, res) => {
         const site = JSON.parse(
           (await this.db('info')
             .select('value')
@@ -152,7 +153,9 @@ class HTTPAPI {
         } else {
           res.json(renderedComponent)
         }
-      })
+      }
+      router.get(`${route}`, routeHandler)
+      router.post(`${route}`, routeHandler)
     }
 
     this.app.get('/images/:image', async (req, res) => {
