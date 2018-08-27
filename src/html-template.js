@@ -9,6 +9,15 @@ export default ({ body, css, site }) => {
     <body>
       ${body}
       <style>${css}</style>
+      <script>
+        var menuOpen = false;
+        var menuButton = document.getElementById('menu-button');
+        menuButton.addEventListener('click', function() {
+          menuOpen = !menuOpen;
+          document.getElementById('small-header').classList.remove(menuOpen ? 'menu-closed' : 'menu-open');
+          document.getElementById('small-header').classList.add(menuOpen ? 'menu-open' : 'menu-closed');
+        });
+      </script>
     </body>
   </html>
 `.trim()

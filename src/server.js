@@ -16,6 +16,7 @@ import tmp from 'tmp-promise'
 import { verifyPassword } from './password'
 import basicAuth from 'express-basic-auth'
 import css from './index.css'
+import { wrapWithRouteContext } from './components/RouteContext'
 
 const importAll = r =>
   r.keys().reduce((acc, k) => {
@@ -134,24 +135,29 @@ class HTTPAPI {
             .where({ path: 'root' })
             .first()).value
         )
-        const renderedComponent = await componentFunc({
+
+        const routeParams = {
           req,
           res,
           db: this.db,
           site,
           route
-        })
+        }
 
-        if (isValidElement(renderedComponent)) {
+        const componentElement = await componentFunc(routeParams)
+
+        if (isValidElement(componentElement)) {
           res.send(
             htmlTemplate({
               site,
               css,
-              body: ReactDOM.renderToString(renderedComponent)
+              body: ReactDOM.renderToString(
+                wrapWithRouteContext(routeParams, componentElement)
+              )
             })
           )
         } else {
-          res.json(renderedComponent)
+          res.json(componentElement)
         }
       }
       router.get(`${route}`, routeHandler)

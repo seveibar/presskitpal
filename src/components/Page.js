@@ -2,6 +2,10 @@
 
 import React from 'react'
 import Sidebar from './Sidebar'
+import RouteContext from './RouteContext'
+import LargeOnly from './LargeOnly'
+import SmallOnly from './SmallOnly'
+import SmallHeader from './SmallHeader'
 
 export default ({ site, children, route }: any) => (
   <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -17,16 +21,18 @@ export default ({ site, children, route }: any) => (
         flexDirection: 'row'
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: 300,
-          borderRight: `2px solid ${site.primaryColor}`
-        }}
-      >
-        <Sidebar site={site} route={route} />
-      </div>
+      <LargeOnly>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: 300,
+            borderRight: `2px solid ${site.primaryColor}`
+          }}
+        >
+          <Sidebar route={route} />
+        </div>
+      </LargeOnly>
       <div
         style={{
           display: 'flex',
@@ -36,6 +42,9 @@ export default ({ site, children, route }: any) => (
           backgroundColor: '#eee'
         }}
       >
+        <SmallOnly>
+          <SmallHeader />
+        </SmallOnly>
         <div className="content">{children}</div>
       </div>
     </div>

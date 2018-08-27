@@ -14,7 +14,7 @@ export default async ({ db, site, route }: PageParameters) => (
       style={{ flexWrap: 'wrap', display: 'flex', justifyContent: 'center' }}
     >
       {site.links.map(({ type, url }) => (
-        <div style={{ margin: 10, width: 400 }}>
+        <div style={{ margin: 10, width: 200 }}>
           <SocialIcon url={url} />
           <a
             style={{
