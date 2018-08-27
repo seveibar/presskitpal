@@ -126,7 +126,7 @@ class HTTPAPI {
       let router = this.app
       if (route.startsWith('/admin')) {
         router = this.authRouter
-        route = route.replace(/^\/admin\//, '')
+        route = route.replace(/^\/admin/, '')
       }
       const routeHandler = async (req, res) => {
         const site = JSON.parse(
