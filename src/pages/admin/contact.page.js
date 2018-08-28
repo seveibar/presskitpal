@@ -4,12 +4,13 @@ import React from 'react'
 import AdminEditPage, { Field } from '../../components/AdminEditPage'
 import processFields from './process-fields'
 
-export default async ({ req, db }) => {
-  await processFields({ req, db })
+export default async (params: any) => {
+  const newSite = await processFields(params)
   return (
     <AdminEditPage
       title="Contact"
       description="What's the best way to reach you?"
+      site={newSite}
     >
       <Field label="Text" name="contact.text" type="markdown" />
       <Field label="Contact Name" name="contact.personName" type="text" />

@@ -1,7 +1,9 @@
 // @flow
 
 const credential = require('credential')
-const pw = credential()
+const pw = credential({
+  work: process.env.NODE_ENV === 'production' ? 0.25 : 0.1
+})
 
 export const hashPassword = (password: string) =>
   new Promise((resolve, reject) => {

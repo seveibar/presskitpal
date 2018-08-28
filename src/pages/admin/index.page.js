@@ -72,10 +72,10 @@ const Section = ({ title, description, children }) => (
 )
 
 const pages = `
+essentials;intro; Introduction; The text on the press kit home page. Explain your company, products, story and origins.
 essentials;contact; Contact; Contact information for press outlets to get in touch.
 essentials;address; Address; Location of your company.
 essentials;links; Links; Your twitter, blog, LinkedIn, etc.
-essentials;intro; Introduction; The text on the press kit home page. Explain your company, products, story and origins.
 content;articles; Articles; Blog posts or stories about your business.
 content;awards; Awards; Trophies, accolades and awards your business has received.
 content;testimonials; Testimonials; Things your customers are saying about you.
