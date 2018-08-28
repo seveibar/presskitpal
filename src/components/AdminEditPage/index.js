@@ -1,9 +1,10 @@
 // @flow
 
 import React, { Fragment } from 'react'
-import RouteContext from './RouteContext'
+import RouteContext from '../RouteContext'
 
 import getWithin from 'lodash/get'
+import textareaAutoExpandSnippet from './textarea-auto-expand'
 
 export const FieldContext = React.createContext()
 
@@ -47,7 +48,24 @@ export const Field = ({
           {getWithin(rc.site, name).map((v, index) => (
             <FieldContext.Provider value={{ name, itemName, index }}>
               <div style={{ border: '1px dashed #ccc', marginTop: 16 }}>
-                <div>
+                <div
+                  style={{ display: 'flex', paddingRight: 8, paddingLeft: 8 }}
+                >
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 'bold',
+                      color: '#fff',
+                      backgroundColor: '#888',
+                      marginTop: 4,
+                      padding: 2,
+                      paddingLeft: 5,
+                      paddingRight: 5
+                    }}
+                  >
+                    {itemName} {index + 1}
+                  </span>
+                  <div style={{ flexGrow: 1 }} />
                   <button
                     className="link-button"
                     name={`${name}_action`}
@@ -111,8 +129,15 @@ export const Field = ({
                 )}
                 {type === 'markdown' && (
                   <textarea
+                    className="autoExpand"
+                    style={{ overflow: 'hidden' }}
+                    rows={Math.max(
+                      5,
+                      (value || getWithin(site, fullName) || '').split('\n')
+                        .length
+                    )}
+                    data-min-rows="5"
                     name={fullName}
-                    style={{ minHeight: 200 }}
                     value={value || getWithin(site, fullName)}
                   />
                 )}
@@ -199,6 +224,11 @@ export default ({ title, description, children, site: modifiedSite }) => (
             </form>
           </div>
         </div>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: textareaAutoExpandSnippet
+          }}
+        />
       </RouteContext.Provider>
     )}
   </RouteContext.Consumer>
