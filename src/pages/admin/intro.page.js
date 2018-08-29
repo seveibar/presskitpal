@@ -9,12 +9,12 @@ export default async (params: any) => {
   const newSite = await processFields(params)
   return (
     <AdminEditPage
-      title="Address"
-      description="Location of your company."
+      title="Introduction"
+      description="Name of your company and introduction text. Explain your company, products, story and origins."
       site={newSite}
     >
-      <Field label="Full Address" name="address.fullAddress" type="markdown" />
-      <Field label="Text" name="address.text" type="markdown" />
+      <Field label="Name of Site" name="name" type="text" />
+      <Field label="Introduction" name="about.text" type="markdown" />
     </AdminEditPage>
   )
 }

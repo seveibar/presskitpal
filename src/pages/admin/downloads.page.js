@@ -8,19 +8,18 @@ export default async (params: any) => {
   const newSite = await processFields(params)
   return (
     <AdminEditPage
-      title="Press Releases"
-      description="Links to your latest press releases."
+      title="Downloads"
+      description="Anything else reporters should be able to download."
       site={newSite}
     >
       <Field
-        label="Press Releases"
+        label="Downloads"
+        itemName="Download"
+        name="downloads"
         type="array"
-        itemName="Press Release"
-        name="pressReleases"
       >
-        <Field label="URL" name="url" type="text" />
-        <Field label="Title" name="title" type="text" />
-        <Field label="Date" name="date" type="date" />
+        <Field label="Description" name="description" type="text" />
+        <Field label="File" name="file" type="file" />
       </Field>
     </AdminEditPage>
   )

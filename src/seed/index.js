@@ -116,6 +116,9 @@ testimonials:
     author: Stacy Shaman
   - text: Incredible, just incredible. I don't know how they did it but boy wow boy.
     author: Rick Sanchez
+downloads:
+  - description: Description for the downloadable document.
+    url: /path/to/somepdf.pdf
 `)
 
 export default async db => {

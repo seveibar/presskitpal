@@ -72,23 +72,23 @@ const Section = ({ title, description, children }) => (
 )
 
 const pages = `
-essentials;intro; Introduction; The text on the press kit home page. Explain your company, products, story and origins.
+essentials;intro; Introduction; Name of your company and text on your press kit home page.
 essentials;contact; Contact; Contact information for press outlets to get in touch.
 essentials;address; Address; Location of your company.
 essentials;links; Links; Your twitter, blog, LinkedIn, etc.
 content;articles; Articles; Blog posts or stories about your business.
-content;awards; Awards; Trophies, accolades and awards your business has received.
 content;testimonials; Testimonials; Things your customers are saying about you.
 content;press-releases; Press Releases; Add a link to a press release.
 content;team; Team; Everyone involved in your company.
-content;images; Images; Images for your product or pictures of your office and team.
-content;videos; Videos; Videos of your products or promotional videos.
+content;images; Images; Images of your product or pictures of your office and team.
+content;videos; Videos; Videos of your products or promotional content.
 content;logos; Logos; The logo of your product or company.
-content;other-media; Other Media; Anything else reporters should be able to download e.g. pdf documents.
+content;downloads; Downloads; Anything else reporters should be able to download e.g. pdf documents.
 settings;account;Account;Change account details, add other administrators.
 settings;billing;Billing;Update billing information or subscription.
 settings;domain;Domain;Add a custom domain.
 settings;style;Style;Edit the colors and style of your press kit.
+settings;import-export;Import & Export;Backup or restore your press kit.
 `
   .split('\n')
   .map(a => a.split(';').map(b => b.trim()))
@@ -120,7 +120,7 @@ export default () => (
           .filter(a => a.section === 'essentials')
           .map(pg => (
             <Button
-              url={`./${pg.url}`}
+              url={`/admin/${pg.url}`}
               title={pg.title}
               description={pg.description}
             />
@@ -131,7 +131,7 @@ export default () => (
           .filter(a => a.section === 'content')
           .map(pg => (
             <Button
-              url={`./${pg.url}`}
+              url={`/admin/${pg.url}`}
               title={pg.title}
               description={pg.description}
             />
@@ -145,7 +145,7 @@ export default () => (
           .filter(a => a.section === 'settings')
           .map(pg => (
             <Button
-              url={`./${pg.url}`}
+              url={`/admin/${pg.url}`}
               title={pg.title}
               description={pg.description}
             />

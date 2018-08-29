@@ -24,7 +24,7 @@ export const FieldLabel = ({ children }) => (
 
 type FieldProps = {
   label: string,
-  type: 'array' | 'markdown' | 'text' | 'image' | 'choice',
+  type: 'array' | 'markdown' | 'text' | 'image' | 'choice' | 'date' | 'file',
   itemName?: string,
   value?: any,
   choices?: Array<string>,
@@ -47,7 +47,7 @@ export const Field = ({
           {label && <FieldLabel>{label}</FieldLabel>}
           {getWithin(rc.site, name).map((v, index) => (
             <FieldContext.Provider value={{ name, itemName, index }}>
-              <div style={{ border: '1px dashed #ccc', marginTop: 16 }}>
+              <div style={{ border: '2px solid #888', marginTop: 16 }}>
                 <div
                   style={{ display: 'flex', paddingRight: 8, paddingLeft: 8 }}
                 >
@@ -57,10 +57,10 @@ export const Field = ({
                       fontWeight: 'bold',
                       color: '#fff',
                       backgroundColor: '#888',
-                      marginTop: 4,
-                      padding: 2,
-                      paddingLeft: 5,
-                      paddingRight: 5
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      paddingTop: 4,
+                      paddingBottom: 0
                     }}
                   >
                     {itemName} {index + 1}
@@ -152,11 +152,33 @@ export const Field = ({
                     </select>
                   </div>
                 )}
+                {type === 'date' && (
+                  <input
+                    type="date"
+                    name={fullName}
+                    value={value || getWithin(site, fullName)}
+                  />
+                )}
+                {type === 'file' && (
+                  <Fragment>
+                    <div style={{ fontSize: 12, padding: 10 }}>
+                      {getWithin(site, fullName)
+                        ? getWithin(site, fullName)
+                        : 'No File Uploaded'}
+                    </div>
+                    <input type="file" name={fullName} />
+                  </Fragment>
+                )}
                 {type === 'image' && (
                   <div>
                     {getWithin(site, fullName) ? (
                       <img
-                        style={{ maxWidth: 200, maxHeight: 200 }}
+                        style={{
+                          marginTop: 4,
+                          marginLeft: 4,
+                          maxWidth: 200,
+                          maxHeight: 200
+                        }}
                         src={getWithin(site, fullName)}
                       />
                     ) : (
@@ -199,7 +221,7 @@ export default ({ title, description, children, site: modifiedSite }) => (
           <div
             style={{
               display: 'flex-inline',
-              minWidth: 400,
+              width: 500,
               padding: 10,
               borderRadius: 5,
               border: '1px solid #ddd',
