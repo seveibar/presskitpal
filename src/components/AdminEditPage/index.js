@@ -46,7 +46,10 @@ export const Field = ({
         <Fragment>
           {label && <FieldLabel>{label}</FieldLabel>}
           {getWithin(rc.site, name).map((v, index) => (
-            <FieldContext.Provider value={{ name, itemName, index }}>
+            <FieldContext.Provider
+              key={index}
+              value={{ name, itemName, index }}
+            >
               <div style={{ border: '2px solid #888', marginTop: 16 }}>
                 <div
                   style={{ display: 'flex', paddingRight: 8, paddingLeft: 8 }}
@@ -66,25 +69,29 @@ export const Field = ({
                     {itemName} {index + 1}
                   </span>
                   <div style={{ flexGrow: 1 }} />
+                  {index !== 0 && (
+                    <button
+                      className="link-button"
+                      name={`${name}[${index}]_action`}
+                      value="moveup"
+                      type="submit"
+                    >
+                      up
+                    </button>
+                  )}
+                  {getWithin(rc.site, name).length - 1 !== index && (
+                    <button
+                      className="link-button"
+                      name={`${name}[${index}]_action`}
+                      value="movedown"
+                      type="submit"
+                    >
+                      down
+                    </button>
+                  )}
                   <button
                     className="link-button"
-                    name={`${name}_action`}
-                    value="moveup"
-                    type="submit"
-                  >
-                    up
-                  </button>
-                  <button
-                    className="link-button"
-                    name={`${name}_action`}
-                    value="movedown"
-                    type="submit"
-                  >
-                    down
-                  </button>
-                  <button
-                    className="link-button"
-                    name={`${name}_action`}
+                    name={`${name}[${index}]_action`}
                     value="delete"
                     type="submit"
                   >
@@ -96,7 +103,7 @@ export const Field = ({
             </FieldContext.Provider>
           ))}
           <div style={{ marginTop: 5 }}>
-            <button type="submit" name="add_new" value={name}>
+            <button type="submit" name={`${name}_action`} value="new">
               Add New {itemName}
             </button>
           </div>
@@ -116,7 +123,6 @@ export const Field = ({
                 <FieldLabel>
                   {label}
                   {type === 'markdown' && ' (markdown)'}
-                  {}
                 </FieldLabel>
                 {type === 'text' && (
                   <input
@@ -143,7 +149,8 @@ export const Field = ({
                 )}
                 {type === 'choice' && (
                   <div style={{ paddingLeft: 4, marginTop: 2 }}>
-                    <select value={value || getWithin(site, fullName)}>
+                    <select value={value || getWithin(site, fullName) || ''}>
+                      <option value="">none</option>
                       {(choices || []).map(choice => (
                         <option key={choice} value={choice}>
                           {choice}
@@ -162,9 +169,13 @@ export const Field = ({
                 {type === 'file' && (
                   <Fragment>
                     <div style={{ fontSize: 12, padding: 10 }}>
-                      {getWithin(site, fullName)
-                        ? getWithin(site, fullName)
-                        : 'No File Uploaded'}
+                      {getWithin(site, fullName) ? (
+                        <a href={getWithin(site, fullName)}>
+                          {getWithin(site, fullName)}
+                        </a>
+                      ) : (
+                        'No File Uploaded'
+                      )}
                     </div>
                     <input type="file" name={fullName} />
                   </Fragment>
@@ -235,7 +246,7 @@ export default ({ title, description, children, site: modifiedSite }) => (
               {title}
             </div>
             <div style={{ color: '#666' }}>{description}</div>
-            <form method="POST">
+            <form method="POST" encType="multipart/form-data">
               <FieldContext.Provider value={null}>
                 <div style={{ marginTop: 20 }}>{children}</div>
                 <div>

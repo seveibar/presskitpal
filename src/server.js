@@ -59,7 +59,7 @@ class HTTPAPI {
       await this.db.schema.createTable('image', table => {
         table.string('path').primary()
         table.blob('value')
-        table.string('extension')
+        table.string('mimetype')
       })
       await this.db.schema.createTable('admin_user', table => {
         table.string('admin_user_id').primary()
@@ -167,13 +167,13 @@ class HTTPAPI {
     this.app.get('/images/:image', async (req, res) => {
       const imagePath = req.params.image
       const image = await this.db('image')
-        .select(['value', 'extension'])
+        .select(['value', 'mimetype'])
         .where({ path: imagePath })
         .first()
       if (!image) {
         res.status(404).send('image not found')
       } else {
-        res.contentType(image.extension)
+        res.contentType(image.mimetype)
         res.end(image.value, 'binary')
       }
     })

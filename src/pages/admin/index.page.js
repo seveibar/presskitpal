@@ -105,6 +105,7 @@ export default () => (
       style={{
         flexShrink: 1,
         maxWidth: 1400,
+        minWidth: 700,
         width: '100%',
         display: 'flex',
         flexGrow: 1,

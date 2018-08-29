@@ -174,7 +174,7 @@ export default async db => {
       images.map(async (imageName, i) => ({
         path: imageName,
         value: fs.readFileSync(path.join('.cache', imageName)),
-        extension: 'jpg'
+        mimetype: 'image/jpeg'
       }))
     )
   )

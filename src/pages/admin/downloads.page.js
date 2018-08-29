@@ -19,7 +19,7 @@ export default async (params: any) => {
         type="array"
       >
         <Field label="Description" name="description" type="text" />
-        <Field label="File" name="file" type="file" />
+        <Field label="File" name="url" type="file" />
       </Field>
     </AdminEditPage>
   )
