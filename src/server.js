@@ -129,12 +129,21 @@ class HTTPAPI {
         route = route.replace(/^\/admin/, '')
       }
       const routeHandler = async (req, res) => {
-        const site = JSON.parse(
-          (await this.db('info')
-            .select('value')
-            .where({ path: 'root' })
-            .first()).value
-        )
+        let site
+        try {
+          site = JSON.parse(
+            (await this.db('info')
+              .select('value')
+              .where({ path: 'root' })
+              .first()).value
+          )
+        } catch (e) {
+          if (route !== '/setup' && route !== '/setup/') {
+            return res.send(
+              'Site is not setup, visit <a href="/setup">/setup</a>'
+            )
+          }
+        }
 
         const routeParams = {
           req,

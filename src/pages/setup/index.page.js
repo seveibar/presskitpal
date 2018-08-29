@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { hashPassword } from '../../password'
+import defaultSite from '../../default-site'
 
 export default async ({ db, req }: any) => {
   const [{ 'count(*)': numberOfAdminUsers }] = await db('admin_user').count()
@@ -24,6 +25,10 @@ export default async ({ db, req }: any) => {
         await db('admin_user').insert({
           admin_user_id: username,
           password_hash: hashPassword(password)
+        })
+        await db('info').insert({
+          path: 'root',
+          value: JSON.stringify(defaultSite)
         })
         return (
           <div>
