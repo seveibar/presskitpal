@@ -48,18 +48,22 @@ export default () => (
             flexDirection: 'row'
           }}
         >
-          {site.cornerLogo && (
-            <div
-              style={{
-                width: 200,
-                height: 80,
-                backgroundImage: `url(${site.cornerLogo})`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover'
-              }}
-            />
-          )}
+          <div
+            style={
+              site.cornerLogo
+                ? {
+                    width: 200,
+                    height: 80,
+                    backgroundImage: `url(${site.cornerLogo})`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover'
+                  }
+                : { textAlign: 'center', padding: 20, fontSize: 24 }
+            }
+          >
+            {!site.cornerLogo && 'Your Logo'}
+          </div>
           <div style={{ flexGrow: 1 }} />
           <div
             id="menu-button"

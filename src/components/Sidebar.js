@@ -33,18 +33,29 @@ export default ({ site, route }: any) => {
             minHeight: '100vh'
           }}
         >
-          {site.cornerLogo && (
-            <div
-              style={{
-                width: 300,
-                height: 200,
-                backgroundImage: `url(${site.cornerLogo})`,
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                marginBottom: 20
-              }}
-            />
-          )}
+          <div
+            style={
+              site.cornerLogo
+                ? {
+                    width: 300,
+                    height: 200,
+                    backgroundImage: `url(${site.cornerLogo})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    marginBottom: 20
+                  }
+                : {
+                    width: 300,
+                    height: 200,
+                    padding: 20,
+                    fontSize: 24,
+                    marginBottom: 20,
+                    textAlign: 'center'
+                  }
+            }
+          >
+            {!site.cornerLogo && 'Your Logo'}
+          </div>
           <Button url="/">About</Button>
           <Button url="/contact">Contact</Button>
           <Button url="/links">Links</Button>

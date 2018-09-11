@@ -24,7 +24,7 @@ export default async ({ db, req }: any) => {
       try {
         await db('admin_user').insert({
           admin_user_id: username,
-          password_hash: hashPassword(password)
+          password_hash: await hashPassword(password)
         })
         await db('info').insert({
           path: 'root',
